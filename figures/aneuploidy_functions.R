@@ -107,7 +107,7 @@ euploidyByAge <- function(data, label) {
 aneuploidyByCase <- function(data) {
 	aneuploid_counts <- data.frame()
 	for (i in unique(data$case)) {
-		subset <- data_filtered[data$case == i,]
+		subset <- data[data$case == i,]
 		euploid <- sum(subset$ploidy == TRUE)
 		aneuploid <- sum(subset$ploidy == FALSE)
 		aneuploid_counts <- rbind(aneuploid_counts, cbind(i, euploid, aneuploid))

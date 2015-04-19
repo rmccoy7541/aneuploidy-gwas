@@ -57,6 +57,9 @@ callEuploidy <- function(data) {
 	return(data)
 }
 
+# Function: euploidyByAge
+# Returns data frame that summarizes rate of aneuploidy versus maternal age
+
 aneuploidyByAge <- function(data, label) {
 	results <- data.frame(matrix(ncol = 5))
 	minAge <- min(data$maternal_age[!is.na(data$maternal_age)])
@@ -76,6 +79,8 @@ aneuploidyByAge <- function(data, label) {
 	return(results[-1,])
 }
 
+# Function: euploidyByAge
+# Returns data frame that summarizes rate of euploidy versus maternal age
 
 euploidyByAge <- function(data, label) {
 	results <- data.frame(matrix(ncol = 5))
@@ -94,4 +99,18 @@ euploidyByAge <- function(data, label) {
 	results$X3 <- as.numeric(results$X3)
 	results$X5 <- as.numeric(results$X5)
 	return(results[-1,])
+}
+
+# Function: aneuploidyByCase
+# counts aneuploid and euploid embryos by case and returns as data frame
+
+aneuploidyByCase <- function(data) {
+	aneuploid_counts <- data.frame()
+	for (i in unique(data$case)) {
+		subset <- data_filtered[data$case == i,]
+		euploid <- sum(subset$ploidy == TRUE)
+		aneuploid <- sum(subset$ploidy == FALSE)
+		aneuploid_counts <- rbind(aneuploid_counts, cbind(i, euploid, aneuploid))
+	}
+	return(aneuploid_counts)
 }
